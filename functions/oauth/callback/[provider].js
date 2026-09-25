@@ -227,18 +227,17 @@ export async function onRequestGet(context) {
 
     // code e state são obrigatórios
     if (!code || !state) {
-      return errorResponse(400);
-    }
+  console.error("GitHub callback: missing code or state");
+  return errorResponse(400);
+}
 
     // Recupera o cookie temporário
-    const transactionCookie = getCookie(
-      request,
-      "__Host-oauth-tx"
-    );
+const transactionCookie = getCookie(request, "__Host-oauth-tx");
 
-    if (!transactionCookie) {
-      return errorResponse(400);
-    }
+if (!transactionCookie) {
+  console.error("GitHub callback: missing transaction cookie");
+  return errorResponse(400);
+}
 
     // Calcula os hashes
     const idHash = await sha256Base64Url(
@@ -273,23 +272,23 @@ export async function onRequestGet(context) {
       )
       .first();
 
-    if (!transactionResult) {
-      return errorResponse(400);
-    }
+if (!transactionResult) {
+  console.error("GitHub callback: transaction not found or expired");
+  return errorResponse(400);
+}
 
-    // Confirma que a transação pertence ao provedor correto
-    if (
-      transactionResult.provider !== provider
-    ) {
-      return errorResponse(400);
-    }
+if (transactionResult.provider !== provider) {
+  console.error(
+    "GitHub callback: provider mismatch:",
+    transactionResult.provider
+  );
+  return errorResponse(400);
+}
 
-    // Confirma o state
-    if (
-      transactionResult.state_hash !== stateHash
-    ) {
-      return errorResponse(400);
-    }
+if (transactionResult.state_hash !== stateHash) {
+  console.error("GitHub callback: state mismatch");
+  return errorResponse(400);
+}
 
     /*
      * A transação deve ser apagada antes
