@@ -425,7 +425,18 @@ export async function onRequestGet(context) {
       }
     });
 
-    } catch (error) {
+        return new Response(null, {
+      status: 302,
+      headers: {
+        "Location": env.PUBLIC_BASE_URL,
+        "Set-Cookie": [
+          clearTransactionCookie(),
+          sessionCookie(sessionValue)
+        ],
+        "Cache-Control": "no-store"
+      }
+    });
+  } catch (error) {
     console.error(
       "OAuth callback error:",
       error instanceof Error
@@ -435,3 +446,4 @@ export async function onRequestGet(context) {
 
     return errorResponse(500);
   }
+}
