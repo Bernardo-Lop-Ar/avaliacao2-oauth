@@ -425,7 +425,13 @@ export async function onRequestGet(context) {
       }
     });
 
-  } catch (error) {
+    } catch (error) {
+    console.error(
+      "OAuth callback error:",
+      error instanceof Error
+        ? error.message
+        : "unknown_error"
+    );
+
     return errorResponse(500);
   }
-}
