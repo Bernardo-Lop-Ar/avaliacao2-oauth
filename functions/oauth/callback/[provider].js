@@ -121,17 +121,15 @@ async function exchangeGithubCode(
 
 
 async function getGithubProfile(accessToken) {
-  const response = await fetch(
-    "https://api.github.com/user",
-    {
-      method: "GET",
-      headers: {
-        "Authorization": `Bearer ${accessToken}`,
-        "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2026-03-10"
-      }
-    }
-  );
+  const response = await fetch("https://api.github.com/user", {
+  method: "GET",
+  headers: {
+    "Authorization": `Bearer ${accessToken}`,
+    "Accept": "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2026-03-10",
+    "User-Agent": "oauth-pages-lab"
+  }
+});
 
 if (!response.ok) {
   console.error(
