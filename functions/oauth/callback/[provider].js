@@ -412,30 +412,18 @@ export async function onRequestGet(context) {
     // RETORNO PARA O SITE
     // =========================
 
-    return new Response(null, {
-      status: 302,
-      headers: {
-        "Location": env.PUBLIC_BASE_URL,
-        "Set-Cookie":
-          [
-            clearTransactionCookie(),
-            sessionCookie(sessionValue)
-          ],
-        "Cache-Control": "no-store"
-      }
-    });
+const headers = new Headers();
 
-        return new Response(null, {
-      status: 302,
-      headers: {
-        "Location": env.PUBLIC_BASE_URL,
-        "Set-Cookie": [
-          clearTransactionCookie(),
-          sessionCookie(sessionValue)
-        ],
-        "Cache-Control": "no-store"
-      }
-    });
+headers.set("Location", env.PUBLIC_BASE_URL);
+headers.append("Set-Cookie", clearTransactionCookie());
+headers.append("Set-Cookie", sessionCookie(sessionValue));
+headers.set("Cache-Control", "no-store");
+
+return new Response(null, {
+  status: 302,
+  headers
+});
+    
   } catch (error) {
     console.error(
       "OAuth callback error:",
