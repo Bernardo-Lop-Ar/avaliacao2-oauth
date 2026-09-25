@@ -133,9 +133,15 @@ async function getGithubProfile(accessToken) {
     }
   );
 
-  if (!response.ok) {
-    throw new Error("github_profile_failed");
-  }
+if (!response.ok) {
+  console.error(
+    "GitHub profile request failed:",
+    response.status,
+    response.statusText
+  );
+
+  throw new Error("github_profile_failed");
+}
 
   const profile = await response.json();
 
