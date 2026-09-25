@@ -137,7 +137,15 @@ if (!response.ok) {
   console.error(
     "GitHub profile request failed:",
     response.status,
-    response.statusText
+    response.statusText,
+    "rate-limit:",
+    response.headers.get("x-ratelimit-remaining"),
+    "rate-limit-reset:",
+    response.headers.get("x-ratelimit-reset"),
+    "sso:",
+    response.headers.get("x-github-sso"),
+    "request-id:",
+    response.headers.get("x-github-request-id")
   );
 
   throw new Error("github_profile_failed");
