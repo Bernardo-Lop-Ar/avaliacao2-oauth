@@ -2,19 +2,19 @@ fetch("/api/me", {
     credentials: "same-origin"
 })
 .then((response) => {
-    if (response.ok) {
-        return response.json();
+    if (!response.ok) {
+        throw new Error("Erro ao consultar sessão");
     }
 
-    return null;
+    return response.json();
 })
-.then((user) => {
+.then((data) => {
 
     const status = document.getElementById("status");
 
-    if (user) {
+    if (data.user) {
         status.textContent =
-            `Sessão de ${user.email ?? user.displayName}.`;
+            `Sessão de ${data.user.email ?? data.user.displayName}.`;
     } else {
         status.textContent =
             "Nenhuma sessão neste navegador.";
@@ -22,8 +22,6 @@ fetch("/api/me", {
 
 })
 .catch(() => {
-
     document.getElementById("status").textContent =
         "Não foi possível consultar a sessão.";
-
 });
