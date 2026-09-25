@@ -174,13 +174,8 @@ if (!response.ok) {
 }
 
 
-async function revokeGithubAuthorization(
-  accessToken,
-  config
-) {
-  const authorization = btoa(
-    `${config.clientId}:${config.clientSecret}`
-  );
+async function revokeGithubAuthorization(accessToken, config) {
+  const authorization = btoa(`${config.clientId}:${config.clientSecret}`);
 
   const response = await fetch(
     `https://api.github.com/applications/${encodeURIComponent(config.clientId)}/grant`,
@@ -190,19 +185,26 @@ async function revokeGithubAuthorization(
         "Authorization": `Basic ${authorization}`,
         "Accept": "application/vnd.github+json",
         "Content-Type": "application/json",
-        "X-GitHub-Api-Version": "2026-03-10"
+        "X-GitHub-Api-Version": "2026-03-10",
+        "User-Agent": "oauth-pages-lab"
       },
-      body: JSON.stringify({
-        access_token: accessToken
-      })
+      body: JSON.stringify({ access_token: accessToken })
     }
+  );
+
+  const responseText = await response.text();
+
+  console.log(
+    "GitHub revoke response:",
+    response.status,
+    response.statusText,
+    responseText
   );
 
   if (response.status !== 204) {
     throw new Error("github_revoke_failed");
   }
 }
-
 
 export async function onRequestGet(context) {
   const provider = context.params.provider;
