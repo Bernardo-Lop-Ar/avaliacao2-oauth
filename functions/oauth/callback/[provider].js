@@ -184,8 +184,7 @@ async function revokeGithubAuthorization(accessToken, config) {
         "Authorization": `Basic ${authorization}`,
         "Accept": "application/vnd.github+json",
         "Content-Type": "application/json",
-        "X-GitHub-Api-Version": "2026-03-10",
-        "User-Agent": "oauth-pages-lab"
+        "X-GitHub-Api-Version": "2026-03-10"
       },
       body: JSON.stringify({ access_token: accessToken })
     }
