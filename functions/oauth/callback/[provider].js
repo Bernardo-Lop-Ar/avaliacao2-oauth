@@ -126,8 +126,7 @@ async function getGithubProfile(accessToken) {
   headers: {
     "Authorization": `Bearer ${accessToken}`,
     "Accept": "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2026-03-10",
-    "User-Agent": "oauth-pages-lab"
+    "X-GitHub-Api-Version": "2026-03-10"
   }
 });
 
