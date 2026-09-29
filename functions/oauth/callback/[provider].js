@@ -126,7 +126,8 @@ async function getGithubProfile(accessToken) {
   headers: {
     "Authorization": `Bearer ${accessToken}`,
     "Accept": "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2026-03-10"
+    "X-GitHub-Api-Version": "2026-03-10",
+    "User-Agent": "oauth-pages-lab"
   }
 });
 
@@ -184,7 +185,8 @@ async function revokeGithubAuthorization(accessToken, config) {
         "Authorization": `Basic ${authorization}`,
         "Accept": "application/vnd.github+json",
         "Content-Type": "application/json",
-        "X-GitHub-Api-Version": "2026-03-10"
+        "X-GitHub-Api-Version": "2026-03-10",
+        "User-Agent": "oauth-pages-lab"
       },
       body: JSON.stringify({ access_token: accessToken })
     }
