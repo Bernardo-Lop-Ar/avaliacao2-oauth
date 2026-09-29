@@ -17,7 +17,7 @@ export async function onRequestGet(context) {
       return Response.json(
         { user: null },
         {
-          status: 200,
+          status: 401,
           headers: {
             "Cache-Control": "no-store"
           }
@@ -56,7 +56,7 @@ export async function onRequestGet(context) {
       return Response.json(
         { user: null },
         {
-          status: 200,
+          status: 401,
           headers: {
             "Cache-Control": "no-store"
           }
@@ -75,7 +75,7 @@ export async function onRequestGet(context) {
         }
       },
       {
-        status: 200,
+        status: 401,
         headers: {
           "Cache-Control": "no-store"
         }
