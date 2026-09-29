@@ -75,7 +75,7 @@ export async function onRequestGet(context) {
         }
       },
       {
-        status: 401,
+        status: 200,
         headers: {
           "Cache-Control": "no-store"
         }
