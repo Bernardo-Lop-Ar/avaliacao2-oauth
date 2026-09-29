@@ -23,26 +23,37 @@ export async function onRequestPost(context) {
     }
 
     // Recupera o cookie da sessão.
-    const sessionCookie = getCookie(
-      request,
-      "__Host-session"
-    );
+const sessionCookie = getCookie(request, "__Host-session");
 
-    // Se não existir sessão, ainda podemos
-    // limpar o cookie e responder normalmente.
-    if (sessionCookie) {
-      const sessionHash =
-        await sha256Base64Url(sessionCookie);
+console.log(
+  "Logout: session cookie present:",
+  Boolean(sessionCookie)
+);
 
-      // Remove a sessão do D1.
-      await env.DB
-        .prepare(`
-          DELETE FROM sessions
-          WHERE id_hash = ?
-        `)
-        .bind(sessionHash)
-        .run();
-    }
+if (sessionCookie) {
+  const sessionHash = await sha256Base64Url(sessionCookie);
+
+  const existingSession = await env.DB.prepare(`
+    SELECT 1 AS found
+    FROM sessions
+    WHERE id_hash = ?
+  `).bind(sessionHash).first();
+
+  console.log(
+    "Logout: matching D1 session found:",
+    Boolean(existingSession)
+  );
+
+  const deleteResult = await env.DB.prepare(`
+    DELETE FROM sessions
+    WHERE id_hash = ?
+  `).bind(sessionHash).run();
+
+  console.log(
+    "Logout: D1 rows deleted:",
+    deleteResult.meta?.changes ?? "unknown"
+  );
+}
 
     // Expira o cookie no navegador.
     return new Response(null, {
