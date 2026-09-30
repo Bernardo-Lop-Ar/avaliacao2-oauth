@@ -1,0 +1,82 @@
+ESQUEMA DO BANCO DE DADOS D1 — AVALIAÇÃO 2 OAuth
+
+Projeto: avaliacao2-oauth
+Plataforma: Cloudflare Pages + Cloudflare D1
+
+1. TABELA: oauth_transactions
+
+SQL de criação:
+CREATE TABLE oauth_transactions (
+id_hash TEXT PRIMARY KEY,
+provider TEXT NOT NULL CHECK (provider IN ('google', 'github')),
+state_hash TEXT NOT NULL,
+nonce TEXT,
+code_verifier TEXT NOT NULL,
+expires_at INTEGER NOT NULL
+);
+
+Descrição das colunas:
+
+* id_hash: TEXT, chave primária.
+* provider: TEXT, obrigatório; aceita 'google' ou 'github'.
+* state_hash: TEXT, obrigatório.
+* nonce: TEXT, opcional.
+* code_verifier: TEXT, obrigatório.
+* expires_at: INTEGER, obrigatório; horário de expiração da transação.
+
+Índice:
+
+* oauth_transactions_expiry ON oauth_transactions (expires_at).
+
+2. TABELA: sessions
+
+SQL de criação:
+CREATE TABLE sessions (
+id_hash TEXT PRIMARY KEY,
+issuer TEXT NOT NULL,
+subject TEXT NOT NULL,
+email TEXT,
+display_name TEXT,
+expires_at INTEGER NOT NULL,
+created_at INTEGER NOT NULL
+);
+
+Descrição das colunas:
+
+* id_hash: TEXT, chave primária.
+* issuer: TEXT, obrigatório.
+* subject: TEXT, obrigatório.
+* email: TEXT, opcional.
+* display_name: TEXT, opcional.
+* expires_at: INTEGER, obrigatório; horário de expiração da sessão.
+* created_at: INTEGER, obrigatório; horário de criação da sessão.
+
+Índice:
+
+* sessions_expiry ON sessions (expires_at).
+
+3. TABELA ADICIONAL: _cf_KV
+
+SQL de criação:
+CREATE TABLE _cf_KV (
+key TEXT PRIMARY KEY,
+value BLOB
+) WITHOUT ROWID;
+
+Colunas:
+
+* key: TEXT, chave primária.
+* value: BLOB.
+
+4. ÍNDICES
+
+* oauth_transactions_expiry: índice da coluna expires_at da tabela oauth_transactions.
+* sessions_expiry: índice da coluna expires_at da tabela sessions.
+
+5. OBSERVAÇÕES
+
+* As transações OAuth e as sessões possuem identificadores armazenados como hashes na coluna id_hash.
+* A tabela oauth_transactions armazena o provedor, o hash do state, o nonce quando aplicável, o code_verifier e a expiração.
+* A tabela sessions armazena o emissor, o identificador do usuário no provedor, o e-mail e o nome de exibição quando disponíveis, além dos horários de criação e expiração.
+* A tabela _cf_KV aparece no esquema consultado do banco D1; sua presença, isoladamente, não comprova sua finalidade no fluxo OAuth.
+* Os horários são armazenados como INTEGER; a unidade e o formato dependem de como a aplicação grava e consulta esses valores.
