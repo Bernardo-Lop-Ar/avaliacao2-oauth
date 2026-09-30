@@ -20,3 +20,10 @@
 - **Requisição enviada:** Reabri a mesma URL do callback em uma nova aba do navegador.
 - **Resultado esperado:** O sistema deveria rejeitar a transação já utilizada, sem permitir sua reutilização.
 - **Resultado observado:** O sistema exibiu “Authentication failed” e retornou HTTP 400. **Teste aprovado.**
+
+- ### Teste 4 — Sessão expirada
+
+- **Preparação:** Acessei o banco D1 vinculado ao projeto e executei `UPDATE sessions SET expires_at = 0;`.
+- **Requisição enviada:** `GET https://avaliacao2-oauth.pages.dev/api/me`.
+- **Resultado esperado:** A API deveria retornar HTTP `401 Unauthorized`, recusando a sessão expirada.
+- **Resultado observado:** O SQL foi executado com sucesso e a API retornou HTTP `401 Unauthorized`. **Teste aprovado.**
