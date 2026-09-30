@@ -45,3 +45,13 @@
 * **Resultado esperado:** A API deveria rejeitar o cookie antigo e retornar HTTP 401 Unauthorized, pois a sessão já havia sido revogada.
 * **Resultado observado:** A API retornou HTTP 401 Unauthorized.
 * **Status:** APROVADO
+
+## Caso 7 — Transação OAuth expirada
+
+**Procedimento:** Iniciei o login com Google, defini `expires_at = 0` na tabela `oauth_transactions` do D1 antes de concluir a autenticação e retornei ao fluxo de login.
+
+**Resultado esperado:** A autenticação é rejeitada porque a transação expirou.
+
+**Resultado obtido:** A requisição retornou HTTP 401, indicando que não havia uma sessão autenticada.
+
+**Status:** A verificar — confirmar também que o callback rejeitou a transação expirada.
