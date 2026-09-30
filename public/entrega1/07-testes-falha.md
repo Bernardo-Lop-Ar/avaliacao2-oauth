@@ -34,3 +34,10 @@
 - **Requisição enviada:** `POST /oauth/logout`, iniciada a partir de `example.com`, com `credentials: "include"`.
 - **Resultado esperado:** O servidor deveria recusar o logout por origem inválida e preservar a sessão legítima.
 - **Resultado observado:** O navegador informou bloqueio CORS devido à ausência de `Access-Control-Allow-Origin`. Após retornar ao site original, `GET /api/me` retornou HTTP `200 OK`, confirmando que a sessão continuava válida. A rejeição pelo servidor deve ser confirmada separadamente.
+
+### Teste 6 — Reutilização de cookie de sessão revogado
+
+- **Preparação:** Copiei temporariamente o valor do cookie `__Host-session`, realizei logout e confirmei a remoção ou expiração do cookie.
+- **Requisição enviada:** `GET /api/me`, enviando manualmente o cookie antigo por meio de uma requisição HTTP local.
+- **Resultado esperado:** A API deveria rejeitar o cookie antigo e retornar HTTP `401 Unauthorized`, pois a sessão já havia sido revogada.
+- **Resultado observado:** A API retornou `HTTP/1.1 401 Unauthorized`. **Teste aprovado.**
