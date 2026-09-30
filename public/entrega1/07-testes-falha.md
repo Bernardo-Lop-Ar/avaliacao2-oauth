@@ -14,3 +14,9 @@
 * **Resultado observado:** O callback retornou HTTP 400. O log registrou `GitHub callback: state mismatch`. Após a tentativa, `/api/me` retornou HTTP 401.
 * **Status:** APROVADO
 
+### Teste 3 — Reutilização da transação OAuth
+
+- **Preparação:** Realizei um login válido com o Google e copiei a URL do callback da autenticação concluída.
+- **Requisição enviada:** Reabri a mesma URL do callback em uma nova aba do navegador.
+- **Resultado esperado:** O sistema deveria rejeitar a transação já utilizada, sem permitir sua reutilização.
+- **Resultado observado:** O sistema exibiu “Authentication failed” e retornou HTTP 400. **Teste aprovado.**
