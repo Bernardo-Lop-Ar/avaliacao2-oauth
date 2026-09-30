@@ -1,0 +1,7 @@
+Página inicial da GitHub OAuth App
+
+https://avaliacao2-oauth.pages.dev
+
+URL de retorno (Authorization callback URL)
+
+https://avaliacao2-oauth.pages.dev/oauth/callback/github
