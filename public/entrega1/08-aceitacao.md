@@ -15,10 +15,10 @@
 
 * [x] Cada provedor usa uma URL de retorno própria.
 * [x] Os pedidos de autorização usam Authorization Code e PKCE com método S256.
-* [ ] A Function apresenta o Client Secret correto somente durante a troca de tokens.
+* [x] A Function apresenta o Client Secret correto somente durante a troca de tokens.
 * [x] O retorno recusa uma transação ausente, alterada ou reutilizada.
-* [ ] O retorno também recusa transações expiradas.
-* [ ] O ID Token do Google é validado criptográfica e semanticamente antes da criação da sessão.
+* [x] O retorno também recusa transações expiradas.
+* [x] O ID Token do Google é validado criptográfica e semanticamente antes da criação da sessão.
 * [x] O access token do GitHub é usado para consultar `/user`, e a autorização é revogada antes da criação da sessão.
 
 ## 3. Sessão e banco D1
@@ -31,11 +31,11 @@
 
 ## 4. Segurança e encerramento
 
-* [ ] Tokens e segredos não aparecem no HTML, nas URLs salvas, no armazenamento Web, nos registros ou nas evidências entregues.
-* [ ] A equipe consegue explicar por que os arquivos estáticos permanecem públicos.
-* [ ] As sessões administrativas foram encerradas no computador compartilhado.
-* [ ] Os Client Secrets continuam armazenados como segredos criptografados no Cloudflare Pages.
-* [ ] Nenhum segredo foi versionado no histórico do GitHub.
+* [x] Tokens e segredos não aparecem no HTML, nas URLs salvas, no armazenamento Web, nos registros ou nas evidências entregues.
+* [x] A equipe consegue explicar por que os arquivos estáticos permanecem públicos.
+* [x] As sessões administrativas foram encerradas no computador compartilhado.
+* [x] Os Client Secrets continuam armazenados como segredos criptografados no Cloudflare Pages.
+* [x] Nenhum segredo foi versionado no histórico do GitHub.
 
 ## 5. Testes de falha
 
@@ -48,8 +48,8 @@
 
 ## 6. Responsável pela entrega
 
-**Nome:** __________________________________
+**Nome:** Bernardo Lopes de Araujo
 
-**Data da conferência final:** ****/****/________
+**Data da conferência final:30/09/2026
 
 **Observações:** ______________________________________________
