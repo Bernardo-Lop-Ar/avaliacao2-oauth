@@ -1,0 +1,3 @@
+URL de retorno do Google OAuth
+
+https://avaliacao2-oauth.pages.dev/oauth/callback/google
