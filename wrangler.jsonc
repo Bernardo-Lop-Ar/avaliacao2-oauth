@@ -1,0 +1,12 @@
+
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "oauth-sessions-bernardo",
+      "database_id": "a1312010-8395-46e3-845e-57d5d3879e6e",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
